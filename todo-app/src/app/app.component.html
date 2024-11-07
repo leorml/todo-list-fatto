@@ -1,0 +1,31 @@
+<div class="todo-container">
+  <header>
+    <h1>Lista de Tarefas</h1>
+  </header>
+
+  <form (ngSubmit)="adicionarTarefa()">
+    <p>{{ isEditMode ? 'Editar' : 'Adicionar' }} sua tarefa</p>
+    <div class="form-control">
+      <input type="text" [(ngModel)]="novaTarefa.titulo" name="titulo" placeholder="O que você vai fazer?" required />
+      <input type="number" [(ngModel)]="novaTarefa.preco" name="preco" placeholder="Preço" min="0" required />
+      <input type="date" [(ngModel)]="novaTarefa.prazo" name="prazo" required />
+      <div class="form-buttons">
+        <button type="submit">{{ isEditMode ? 'Salvar' : 'Adicionar' }}</button>
+        <button type="button" *ngIf="isEditMode" (click)="resetForm()">Cancelar</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="todo-list">
+    <ul>
+      <li *ngFor="let tarefa of tarefas"
+        [ngStyle]="{ 'background-color': tarefa.price > 1000 ? 'yellow' : 'transparent' }">
+        {{ tarefa.text }} - R$ {{ tarefa.price }} - Prazo: {{ tarefa.deadline }}
+        <div class="task-buttons">
+          <button (click)="editarTarefa(tarefa)">Editar</button>
+          <button (click)="removerTarefa(tarefa)">Remover</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
