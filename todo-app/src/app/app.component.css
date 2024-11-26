@@ -1,54 +1,91 @@
-/* todo.component.css */
+/* Container principal */
 .todo-container {
     padding: 20px;
-    max-width: 600px;
+    max-width: 100%;
     margin: 0 auto;
     background-color: #f4f4f4;
     border-radius: 8px;
 }
 
-.form-control input {
-    margin: 5px;
-    padding: 8px;
-    width: calc(100% - 18px);
-    border-radius: 4px;
+/* Cabeçalho */
+header h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
 
-button {
-    margin: 5px;
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-#todo-list {
-    margin-top: 20px;
-}
-
-#todo-list ul {
-    list-style: none;
-    padding: 0;
-}
-
-#todo-list li {
-    background-color: #fff;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 4px;
+/* Formulário */
+.form-control {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 15px;
 }
 
-#todo-list li button {
-    background-color: #f44336;
+/* Labels */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
 }
 
-#todo-list li button:hover {
-    background-color: #e53935;
+/* Inputs */
+.input-field {
+    margin: 5px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+/* Estilos para os botões */
+.p-button {
+    margin-top: 10px;
+}
+
+/* Botões de ação */
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Tabela */
+::ng-deep .p-datatable {
+    width: 100%;
+}
+
+::ng-deep .p-datatable-tbody>tr>td {
+    min-width: 150px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Linha destacada */
+.linha-destacada {
+    background-color: #f7f7a2;
+}
+
+.linha-destacada button {
+    background-color: inherit !important;
+}
+
+/* Alinhamento dos botões na tabela */
+.acoes-centralizadas {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Estilos para a tabela responsiva */
+.p-datatable .p-datatable-tbody {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
 }

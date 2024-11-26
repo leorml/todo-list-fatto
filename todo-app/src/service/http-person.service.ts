@@ -9,7 +9,7 @@ export class HttpPersonService {
 
   constructor(private http: HttpClient) { }
 
-  private urlBase = "http://localhost:3000";
+  private urlBase = "http://localhost:8080";
   private header = { withCredentials: true };
 
   get(url: string = "", options: any = this.header): Observable<Object> {

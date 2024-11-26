@@ -16,23 +16,28 @@ export class PostService {
   constructor(private http: HttpPersonService) {}
 
   loadPosts(): Observable<any> {
-    return this.http.get('/api/tarefas')
+    return this.http.get('/api/tarefas');
   }
 
   loadPost(id: number): Observable<any> {
-    return this.http.get(`/api/tarefas/${id}`)
+    return this.http.get(`/api/tarefas/${id}`);
   }
 
   createPost(formPost: any): Observable<any> {
-    return this.http.post('/api/tarefas', formPost)
+    return this.http.post('/api/tarefas', formPost);
   }
 
   updatePost(formPost: any): Observable<any> {
-    return this.http.put(`/api/tarefas/${formPost.id}`, formPost)
+    return this.http.put(`/api/tarefas/${formPost.id}`, formPost);
   }
 
   deletePost(id: number): Observable<any> {
-    return this.http.delete(`/api/tarefas/${id}`)
+    return this.http.delete(`/api/tarefas/${id}`);
+  }
+
+  trocaPosicao(formPost: any): Observable<any> {
+  
+    return this.http.put(`/api/tarefas/trocar-posicao`, formPost);
   }
 
   public setformPost(formPost: any) {

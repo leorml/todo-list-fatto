@@ -3,29 +3,70 @@
     <h1>Lista de Tarefas</h1>
   </header>
 
-  <form (ngSubmit)="adicionarTarefa()">
+  <form (ngSubmit)="adicionarTarefa()" #tarefaForm="ngForm">
     <p>{{ isEditMode ? 'Editar' : 'Adicionar' }} sua tarefa</p>
     <div class="form-control">
-      <input type="text" [(ngModel)]="novaTarefa.titulo" name="titulo" placeholder="O que você vai fazer?" required />
-      <input type="number" [(ngModel)]="novaTarefa.preco" name="preco" placeholder="Preço" min="0" required />
-      <input type="date" [(ngModel)]="novaTarefa.prazo" name="prazo" required />
+      <!-- Título da tarefa -->
+      <label for="titulo">Título da Tarefa</label>
+      <input pInputText [(ngModel)]="novaTarefa.titulo" name="titulo" placeholder="O que você vai fazer?" required
+        id="titulo" styleClass="input-field" #titulo="ngModel">
+
+      <!-- Preço da tarefa -->
+      <label for="preco">Preço</label>
+      <p-inputNumber [(ngModel)]="novaTarefa.preco" name="preco" placeholder="Preço" [min]="0" [required]="true"
+        mode="decimal" [locale]="'pt-BR'" id="preco" styleClass="input-field" #preco="ngModel">
+      </p-inputNumber>
+
+      <!-- Prazo da tarefa -->
+      <label for="prazo">Prazo</label>
+      <p-calendar [(ngModel)]="novaTarefa.prazo" name="prazo" [required]="true" dateFormat="dd/mm/yy"
+        placeholder="Escolha uma data" id="prazo" styleClass="input-field" #prazo="ngModel">
+      </p-calendar>
+
+
       <div class="form-buttons">
-        <button type="submit">{{ isEditMode ? 'Salvar' : 'Adicionar' }}</button>
-        <button type="button" *ngIf="isEditMode" (click)="resetForm()">Cancelar</button>
+        <!-- Botão de salvar ou adicionar -->
+        <p-button type="submit" label="{{ isEditMode ? 'Salvar' : 'Adicionar' }}" icon="pi pi-check"
+          [styleClass]="'p-button-success'" [disabled]="!tarefaForm.valid">
+        </p-button>
+
+        <!-- Botão de cancelar -->
+        <p-button type="button" *ngIf="isEditMode" (click)="resetForm()" label="Cancelar" icon="pi pi-times"
+          [styleClass]="'p-button-secondary'">
+        </p-button>
       </div>
     </div>
   </form>
 
-  <div id="todo-list">
-    <ul>
-      <li *ngFor="let tarefa of tarefas"
-        [ngStyle]="{ 'background-color': tarefa.price > 1000 ? 'yellow' : 'transparent' }">
-        {{ tarefa.text }} - R$ {{ tarefa.price }} - Prazo: {{ tarefa.deadline }}
-        <div class="task-buttons">
-          <button (click)="editarTarefa(tarefa)">Editar</button>
-          <button (click)="removerTarefa(tarefa)">Remover</button>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <!-- Tabela de tarefas -->
+  <p-table [value]="tarefas" [paginator]="false" [rows]="5" [responsive]="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Título</th>
+        <th>Preço</th>
+        <th>Prazo</th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tarefa>
+      <tr [class.linha-destacada]="tarefa.price > 1000">
+        <td>{{ tarefa.text }}</td>
+        <td>{{ tarefa.price | currency: 'BRL' }}</td>
+        <td>{{ formatData(tarefa.deadline) }}</td>
+        <td class="acoes-centralizadas">
+          <p-button severity="success" icon="pi pi-pencil" (click)="editarTarefa(tarefa)"></p-button>
+          <p-button severity="danger" icon="pi pi-trash" (click)="removerTarefa(tarefa)"></p-button>
+          <p-button severity="info" icon="pi pi-arrow-up" (click)="trocarPosicao(tarefa, 'up')"
+            *ngIf="tarefas.indexOf(tarefa) > 0"></p-button>
+          <p-button severity="info" icon="pi pi-arrow-down" (click)="trocarPosicao(tarefa, 'down')"
+            *ngIf="tarefas.indexOf(tarefa) < tarefas.length - 1"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
+
+
+<p-confirmDialog></p-confirmDialog>
+
+<p-toast></p-toast>
